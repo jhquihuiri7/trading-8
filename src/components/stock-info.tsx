@@ -15,6 +15,9 @@ const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
     }
     return (
         <>
+            <div className="w-[90%] h-[500px] mb-10">
+                <AdvancedRealTimeChart theme="dark" autosize symbol={stock} copyrightStyles={ChartStyle}></AdvancedRealTimeChart>
+            </div>
             <div className="flex flex-col sm:flex-row justify-between w-[90%]">
                 <div className="w-full sm:w-[68%] rounded-xl border border-green-100 p-5">
                     <h1 className='text-gray-400 text-2xl mb-4'>Titulo 1</h1>
@@ -28,9 +31,6 @@ const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
                         <CryptoCoinsHeatmap colorTheme="dark" symbolUrl="https://trading-8.vercel.app/stock" height="100%" width="100%" copyrightStyles={ChartStyle}></CryptoCoinsHeatmap>
                     </div>  
                 </div>
-            </div>
-            <div className="w-[90%] h-[500px] mt-10">
-                <AdvancedRealTimeChart theme="dark" autosize symbol={stock} copyrightStyles={ChartStyle}></AdvancedRealTimeChart>
             </div>
         </>
     )
