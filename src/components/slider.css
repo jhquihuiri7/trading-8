@@ -1,0 +1,41 @@
+/* components/HorizontalTicker.module.css */
+
+.sliderWrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%; /* Full width */
+  }
+  
+  .slider {
+    display: flex;
+    animation: tickerScroll 40s linear infinite;
+  }
+  .slider-rev {
+    display: flex;
+    animation: tickerScroll-rev 40s linear infinite;
+  }
+  
+  .sliderItem {
+    margin-right: 50px; /* Space between items */
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  @keyframes tickerScroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes tickerScroll-rev {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  

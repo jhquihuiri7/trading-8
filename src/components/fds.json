@@ -1,0 +1,21 @@
+{"stocks":["BITS","FSDF","fdsfd"]}
+
+
+[
+    {
+        "symbol":"btc",
+        "data":{
+            "open":123,
+            "high":3123,
+            "ma10":3123,
+        }
+    },
+    {
+        "symbol":"eth",
+        "data":{
+            "open":123,
+            "high":3123,
+            "ma10":3123,
+        }
+    }
+]
