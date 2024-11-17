@@ -16,13 +16,13 @@ const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
     return (
         <>
             <div className="flex flex-col sm:flex-row justify-between w-[90%]">
-                <div className="w-[68%] rounded-xl border border-green-100 p-5">
+                <div className="w-full sm:w-[68%] rounded-xl border border-green-100 p-5">
                     <h1 className='text-gray-400 text-2xl mb-4'>Titulo 1</h1>
                     <div className='h-[500px]'>
                         <CryptoCurrencyMarket colorTheme="dark" width="100%" height="100%" copyrightStyles={ChartStyle}></CryptoCurrencyMarket>
                     </div>
                 </div>
-                <div className="w-[28%] rounded-xl border border-green-100 p-5">
+                <div className="w-full sm:w-[28%] rounded-xl border border-green-100 p-5">
                     <h1 className='text-gray-400 text-2xl mb-4'>Titulo 1</h1>
                     <div className='h-[500px]'>
                         <CryptoCoinsHeatmap colorTheme="dark" symbolUrl="https://trading-8.vercel.app/stock" height="100%" width="100%" copyrightStyles={ChartStyle}></CryptoCoinsHeatmap>
