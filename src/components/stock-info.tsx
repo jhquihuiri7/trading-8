@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { CryptoCurrencyMarket } from "react-ts-tradingview-widgets";
 import { CryptoCoinsHeatmap } from "react-ts-tradingview-widgets";
-import { AdvancedRealTimeChart, CopyrightStyles } from "react-ts-tradingview-widgets";
+import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import ChartStyle from "./utils";
 
 const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
