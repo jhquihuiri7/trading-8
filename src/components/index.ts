@@ -1,3 +1,4 @@
 import Slider from "./stocks-slider";
 import Landing from "./landing";
-export {Slider, Landing};
+import Stock_info from "./stock-info";
+export {Slider, Landing, Stock_info};
