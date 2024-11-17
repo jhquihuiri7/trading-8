@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react'; 
 import { useSearchParams } from 'next/navigation';
 import {Stock_info} from "@/components";
 
@@ -10,7 +11,9 @@ export default function About() {
 
     return (
       <div className="w-full flex flex-col items-center mt-10">
-        <Stock_info stock={tvwidgetsymbol}></Stock_info>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Stock_info stock={tvwidgetsymbol} />
+      </Suspense>
       </div>
     );
   }
