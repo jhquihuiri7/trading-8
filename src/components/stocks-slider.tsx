@@ -1,13 +1,3 @@
-'use client';
-import dynamic from "next/dynamic";
-const SymbolOverviewNoSSR = dynamic(
-  () => import("react-ts-tradingview-widgets").then((w) => w.SymbolOverview),
-  {
-    ssr: false,
-  }
-);
-
-import React, { Component } from 'react'
 import './slider.css'
 import { SingleTicker, CopyrightStyles } from "react-ts-tradingview-widgets";
 
@@ -29,7 +19,7 @@ const Slider: React.FC<{ items: string[], rev: boolean, key_value:string }> = ({
             <div className="sliderWrapper">
                 <div key={key_value} className={rev ? "slider" : "slider-rev"}>
                     {items.map((item, index) => (
-                        <div className="mx-10"><SingleTicker colorTheme="dark" copyrightStyles={styles} locale="es" largeChartUrl=""></SingleTicker></div>
+                        <div key={index+key_value} className="mx-10"><SingleTicker colorTheme="dark" copyrightStyles={styles} locale="es" largeChartUrl=""></SingleTicker></div>
                     ))}
                 </div>
             </div>

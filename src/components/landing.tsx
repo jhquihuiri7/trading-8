@@ -1,7 +1,5 @@
 'use client';
 import {Slider} from "@/components";
-import React from 'react';
-import { gsap } from 'gsap';
 
 const items = [
     'S&P 500: 3372.2 +0.38%',
