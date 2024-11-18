@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, createContext, useContext } from 'react';
+import { useEffect, useState} from 'react';
 import { CryptoCurrencyMarket } from "react-ts-tradingview-widgets";
 import { CryptoCoinsHeatmap } from "react-ts-tradingview-widgets";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
