@@ -2,20 +2,12 @@
 import {Slider} from "@/components";
 import Image from 'next/image';
 
-const items = [
-    'CRYPTO:BTCUSD',
-    'CRYPTO:ETHUSD',
-    'CRYPTO:SOLUSD',
-    'CRYPTO:DOGEUSD',
-    'CRYPTO:ADAUSD',
-  ];
 
-
-const Landing = ()=> {
+const Landing: React.FC<{ items: string[]}> = ({items})=> {
     return (
         <div className="flex flex-col items-center h-screen justify-around">
-            <Slider items={items} rev={false} key_value={"s-1"}/>  
-            <Slider items={items} rev={true} key_value={"s-2"}/>
+            <Slider items={items.slice(0,items.length/2)} rev={false} key_value={"s-1"}/>  
+            <Slider items={items.slice(items.length/2+1,items.length)} rev={true} key_value={"s-2"}/>
             <div className="flex flex-col items-center mb-10">
                 <div className="flex flex-row">
                     <h1 className="text-white text-7xl sm:text-8xl sm:font-bold mr-4">Trading </h1>

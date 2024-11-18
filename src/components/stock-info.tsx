@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { CryptoCurrencyMarket } from "react-ts-tradingview-widgets";
 import { CryptoCoinsHeatmap } from "react-ts-tradingview-widgets";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
@@ -8,6 +8,7 @@ import ChartStyle from "./utils";
 const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
     const [isClient, setIsClient] = useState(false);
     useEffect(() => {
+        
         setIsClient(true);
       }, []);
     if (!isClient) {
