@@ -1,13 +1,12 @@
 import {Landing} from "@/components";
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+
 
 export const config = {
-  runtime: 'edge',  // This tells Next.js to use Edge runtime for this route
-  regions: ['hnd1'],  // Define the edge regions (iad1 = Northern Virginia, hnd1 = Tokyo)
+  runtime: 'edge',  
+  regions: ['hnd1'],
 };
 
-export default async function Home(request: NextRequest) {
+export default async function Home() {
   const limit = 20;
   let data = [];
   
