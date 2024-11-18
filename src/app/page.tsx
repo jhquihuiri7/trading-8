@@ -8,7 +8,8 @@ export default async function Home() {
   try{
 
     const res = await fetch("https://api.binance.com/api/v3/ticker/24hr")
-
+    console.log(res.status)
+    console.log(res.statusText)
     const response = await res.json();
     console.log(response)
     const topCryptos = response
