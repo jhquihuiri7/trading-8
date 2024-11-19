@@ -4,16 +4,15 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, C
 import React from "react";
 import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
-
-
+import axios from "axios";
 
 const MarketOverview = ()=>{
 
-    const [data, setData] = useState<string[]>([]); // State to hold all crypto symbols
-  const [page, setPage] = useState(1); // State to manage pagination
-  const rowsPerPage = 10; // Number of rows per page
+  const [data, setData] = useState<string[]>([]);
+  const [page, setPage] = useState(1);
+  const [cryptoDetails, setCryptoDetails] = useState<any[]>([]);
+  const rowsPerPage = 8;
 
-  // Fetch crypto data from the Binance API
   useEffect(() => {
     const fetchCryptoData = async () => {
       const limit = 20;
@@ -32,9 +31,9 @@ const MarketOverview = ()=>{
           .slice(0, limit);
 
         const cryptoSymbols = topCryptos.map((crypto: any) => crypto.symbol);
-        console.log(cryptoSymbols); // Log fetched symbols for debugging
+        console.log(cryptoSymbols);
 
-        setData(cryptoSymbols); // Update state with fetched symbols
+        setData(cryptoSymbols); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -43,12 +42,46 @@ const MarketOverview = ()=>{
     fetchCryptoData();
   }, []);
 
-  // Memoized items for the current page
-  const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return data.slice(start, end);
-  }, [page, data]);
+  useEffect(() => {
+    const fetchCryptoDetails = async () => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const details: any[] = [];
+
+        for (const coin of data.slice(start, end)) {
+            const url = "https://api.binance.com/api/v3/klines";
+            const params = {
+                symbol: coin,
+                interval: "1h",
+                limit: 2,
+            };
+
+            try {
+                const response = await axios.get(url, { params });
+                if (response.status === 200) {
+                    const currentData = response.data.at(-1);
+                    const avgPrice = (parseFloat(currentData[2]) + parseFloat(currentData[3])) / 2;
+                    const recommendation = parseFloat(currentData[4]) < avgPrice ? "Comprar" : "Vender";
+
+                    details.push({
+                        symbol: coin,
+                        current_price: parseFloat(currentData[4]),
+                        high_1h: parseFloat(currentData[2]),
+                        low_1h: parseFloat(currentData[3]),
+                        avg_price: avgPrice,
+                        recommendation: recommendation,
+                    });
+                }
+            } catch (error) {
+                console.error(`Error fetching details for ${coin}:`, error);
+            }
+        }
+
+        setCryptoDetails(details);
+    };
+
+    if (data.length > 0) fetchCryptoDetails();
+}, [page, data]);
 
   // Handle page changes
   const handlePageChange = (newPage: number) => {
@@ -57,10 +90,11 @@ const MarketOverview = ()=>{
 
     return (
         <Table
-        className="dark" 
-        color="default"
+        className="bg-[#1e222d] pb-3 border border-[#434651] rounded dark"
+        removeWrapper 
+        color="warning"
         selectionMode="single" 
-        defaultSelectedKeys={["BTCUSDT"]} 
+        defaultSelectedKeys={[]} 
         aria-label="Example static collection table"
         bottomContent={
             <div className="flex w-full justify-center">
@@ -68,9 +102,9 @@ const MarketOverview = ()=>{
                 isCompact
                 showControls
                 showShadow
-                color="secondary"
+                color="warning"
                 page={page}
-                total={2}
+                total={3}
                 onChange={(page) => setPage(page)}
               />
             </div>
@@ -85,14 +119,14 @@ const MarketOverview = ()=>{
           <TableColumn>Señal</TableColumn>
         </TableHeader>
         <TableBody>
-          {items.map((item, index) => (
-            <TableRow key={item}>
-                <TableCell><div className='flex flex-row'><Image src="/logo.png" alt="logo" width={20} height={50}></Image><p className='ml-3'>{item}</p></div></TableCell>
-                <TableCell>item</TableCell>
-                <TableCell>item</TableCell>
-                <TableCell>item</TableCell>
-                <TableCell>item</TableCell>
-                <TableCell>item</TableCell>
+          {cryptoDetails.map((item, index) => (
+            <TableRow key={item['symbol']} onClick={()=>console.log(item)}>
+                <TableCell><div className='flex flex-row'><Image src="/logo.png" alt="logo" width={20} height={50}></Image><p className='ml-3'>{item['symbol']}</p></div></TableCell>
+                <TableCell>{item['current_price'].toFixed(4)}</TableCell>
+                <TableCell>{item['high_1h'].toFixed(4)}</TableCell>
+                <TableCell>{item['low_1h'].toFixed(4)}</TableCell>
+                <TableCell>{item['avg_price'].toFixed(4)}</TableCell>
+                <TableCell><Chip size="sm" variant="flat" color={item['recommendation'] === "Comprar" ? 'success' : 'danger'}>{item['recommendation']}</Chip></TableCell>
             </TableRow>
           ))}
         </TableBody>

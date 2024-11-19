@@ -15,7 +15,7 @@ function AboutContent(){
             <div className="w-full flex flex-col items-center pt-10">
             <div className="flex flex-row justify-start w-full px-10 items-end mb-5">
                     <Image src="/logo.png" alt="logo" width={50} height={50}></Image>
-                    <h4 className='text-white text-2xl px-5'><span>{tvwidgetsymbol.split(":")[1]}</span></h4>
+                    <h4 className='text-white text-2xl px-5'><span>{tvwidgetsymbol}</span></h4>
             </div>
             <Stock_info stock={tvwidgetsymbol}/>
           </div>
