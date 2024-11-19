@@ -37,7 +37,7 @@ const Stock_info : React.FC<{ stock:string }> = ({stock})=> {
                 <div className="w-full sm:w-[28%]">
                     <h1 className='text-gray-400 text-2xl mb-4'>Intención de mercado</h1>
                     <div className='h-[429px] bg-[#131722]'>
-                        <TechnicalAnalysis colorTheme={"dark"} locale= {"es"} height="100%" width="100%" copyrightStyles={ChartStyle}></TechnicalAnalysis>
+                        <TechnicalAnalysis colorTheme={"dark"} locale= {"es"} height="100%" width="100%" symbol={stock} copyrightStyles={ChartStyle}></TechnicalAnalysis>
                     </div>  
                 </div>
             </div>

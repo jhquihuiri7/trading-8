@@ -5,9 +5,15 @@ import React from "react";
 import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import axios from "axios";
+import { useRouter } from 'next/navigation';
+import fs from "fs";
+import path from "path";
+
+const coins_img = ['usdt', 'btc', 'eth', 'doge', 'sol', 'usdc', 'xrp', 'fdusd', 'vnst', 'pepe', 'hbar', 'sol', 'ada', 'shib', 'xlm', 'bonk', 'sui', 'pnut', 'bnb', 'link', 'wif', 'ltc', 'xtz', 'trx', 'weth', 'weth', 'arb', 'avax', 'weth', 'near', 'floki', 'bome', 'dot', 'om', 'fet', 'wld', 'op', 'bch', 'apt', 'algo', 'ban', 'atom', 'cati', 'ena', 'chz', 'uni', 'crv', 'render', 'wbtc', 'cbbtc', 'act', 'ton', 'fil', 'dogs', 'pol', 'etc', 'rune', 'zrx', 'bsc-usd', 'akt', 'ftm', 'tia', 'goat', 'neiro', 'aave', 'gala', 'ondo', 'wbnb', 'ordi', 'usdt', 'jup', 'sei', 'polyx', '$rif', 'strk', 'not', 'inj', 'icp', 'hmstr', 'theta', 'ray', 'ftn', 'wbtc', 'ape', 'tao', 'ldo', 'ctk', '1inch', 'io', 'ens', 'usde', 'people', 'kas', 'x', 'drift', 'turbo', 'ethfi', 'eigen', 'wavax', 'stx']
 
 const MarketOverview = ()=>{
-
+  const router = useRouter();
+  
   const [data, setData] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const [cryptoDetails, setCryptoDetails] = useState<any[]>([]);
@@ -63,6 +69,8 @@ const MarketOverview = ()=>{
                     const avgPrice = (parseFloat(currentData[2]) + parseFloat(currentData[3])) / 2;
                     const recommendation = parseFloat(currentData[4]) < avgPrice ? "Comprar" : "Vender";
 
+                    const image = coins_img.find((img) => coin.toLowerCase().startsWith(img));
+                    console.log(image)  
                     details.push({
                         symbol: coin,
                         current_price: parseFloat(currentData[4]),
@@ -70,6 +78,7 @@ const MarketOverview = ()=>{
                         low_1h: parseFloat(currentData[3]),
                         avg_price: avgPrice,
                         recommendation: recommendation,
+                        img: (image ? image : "btc")
                     });
                 }
             } catch (error) {
@@ -86,6 +95,10 @@ const MarketOverview = ()=>{
   // Handle page changes
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+  };
+
+  const goToPage = (symbol: string) => {
+    router.push('/stock?tvwidgetsymbol='+symbol); // Redirige a la página deseada
   };
 
     return (
@@ -113,19 +126,19 @@ const MarketOverview = ()=>{
         <TableHeader>
           <TableColumn>Crypto</TableColumn>
           <TableColumn>Precio Actual</TableColumn>
-          <TableColumn>Hight 1H</TableColumn>
-          <TableColumn>Low 1H</TableColumn>
-          <TableColumn>Precio Promedio</TableColumn>
+          <TableColumn className='hidden sm:table-cell'>Hight 1H</TableColumn>
+          <TableColumn className='hidden sm:table-cell'>Low 1H</TableColumn>
+          <TableColumn className='hidden sm:table-cell'>Precio Promedio</TableColumn>
           <TableColumn>Señal</TableColumn>
         </TableHeader>
         <TableBody>
           {cryptoDetails.map((item, index) => (
-            <TableRow key={item['symbol']} onClick={()=>console.log(item)}>
-                <TableCell><div className='flex flex-row'><Image src="/logo.png" alt="logo" width={20} height={50}></Image><p className='ml-3'>{item['symbol']}</p></div></TableCell>
+            <TableRow key={item['symbol']} onClick={()=>goToPage(item['symbol'])}>
+                <TableCell><div className='flex flex-row'><Image src={"/crypto_images/"+item['img']+".png"} alt="logo" width={20} height={50}></Image><p className='ml-3'>{item['symbol']}</p></div></TableCell>
                 <TableCell>{item['current_price'].toFixed(4)}</TableCell>
-                <TableCell>{item['high_1h'].toFixed(4)}</TableCell>
-                <TableCell>{item['low_1h'].toFixed(4)}</TableCell>
-                <TableCell>{item['avg_price'].toFixed(4)}</TableCell>
+                <TableCell className='hidden sm:table-cell'>{item['high_1h'].toFixed(4)}</TableCell>
+                <TableCell className='hidden sm:table-cell'>{item['low_1h'].toFixed(4)}</TableCell>
+                <TableCell className='hidden sm:table-cell'>{item['avg_price'].toFixed(4)}</TableCell>
                 <TableCell><Chip size="sm" variant="flat" color={item['recommendation'] === "Comprar" ? 'success' : 'danger'}>{item['recommendation']}</Chip></TableCell>
             </TableRow>
           ))}
