@@ -19,7 +19,7 @@ const Slider: React.FC<{ items: string[], rev: boolean, key_value:string }> = ({
             <div className="sliderWrapper">
                 <div key={key_value} className={rev ? "slider" : "slider-rev"}>
                     {items.map((item, index) => (
-                        <div key={index+key_value} className="mx-10"><SingleTicker symbol={item} colorTheme="dark" copyrightStyles={styles} locale="es" largeChartUrl="https://trading-8.vercel.app/stock"></SingleTicker></div>
+                        <div key={index+key_value} className="mx-10"><SingleTicker symbol={item} colorTheme="dark" copyrightStyles={styles} locale="es" largeChartUrl="https://trading-8.onrender.com/stock"></SingleTicker></div>
                     ))}
                 </div>
             </div>

@@ -24,10 +24,10 @@ export default function Home() {
             .sort((a: any, b: any) => parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume))
             .slice(0, limit);
           const cryptoSymbols = topCryptos.map((crypto: any) => crypto.symbol);
-          console.log(cryptoSymbols); // Correctly logs crypto symbols
+          console.log(cryptoSymbols); 
           
-          setGlobalData(cryptoSymbols); // Update global context
-          setData(cryptoSymbols); // Update local state for rendering
+          setGlobalData(cryptoSymbols); 
+          setData(cryptoSymbols); 
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -43,7 +43,7 @@ export default function Home() {
   }, [globalData]);
   
    return (
-    <div>
+    <div className="bg-[#120f23]">
       <Landing items={data}></Landing>
     </div>
   );
